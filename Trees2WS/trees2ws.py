@@ -145,10 +145,16 @@ for cat in cats:
   print " --> Extracting events from category: %s"%cat
   if inputTreeDir == '': treeName = "%s_%s_%s_%s"%(opt.productionMode,opt.inputMass,sqrts__,cat)
   else: 
-    if "WHiggs" in opt.productionMode: # If WHiggs don't look for the mass...
-      treeName = "%s/%s_%s_%s"%(inputTreeDir,opt.productionMode,sqrts__,cat)
+    if "wh_ALT" in opt.productionMode: # If WHiggs don't look for the mass...
+      treeName = "%s/%s_%s_%s"%(inputTreeDir,"WHiggs0MToGG",sqrts__,cat)
+    elif "wh_SM" in opt.productionMode: # If WHiggs don't look for the mass...
+      treeName = "%s/%s_%s_%s"%(inputTreeDir,"WHiggs0PMToGG",sqrts__,cat)
+    elif "wh" or "zh" in opt.productionMode:
+      treeName = "%s/%s_%s_%s_%s"%(inputTreeDir,"vh",opt.inputMass,sqrts__,cat)
     else:
       treeName = "%s/%s_%s_%s_%s"%(inputTreeDir,opt.productionMode,opt.inputMass,sqrts__,cat)
+
+
   print "    * tree: %s"%treeName
   # Extract tree from uproot
   t = f[treeName]

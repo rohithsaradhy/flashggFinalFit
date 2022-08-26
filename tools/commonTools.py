@@ -74,6 +74,13 @@ def signalFromFileName(_fileName):
     else: d = "_ZToQQ"
   elif "GluGlu" in _fileName: p = "ggh"
   elif "VBF" in _fileName: p = "vbf"
+  elif "VH" in _fileName: p = "wh"
+
+
+  elif "WHiggs0MToGG" in _fileName: p = "wh_ALT"
+  elif "WHiggs0PMToGG" in _fileName: p = "wh_SM"
+
+  
   elif "WH" in _fileName: p = "wh"
   elif "ZH" in _fileName: p = "zh"
   elif "ttH" in _fileName: p = "tth"
