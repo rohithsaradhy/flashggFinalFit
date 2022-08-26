@@ -144,7 +144,11 @@ if opt.doSystematics: sdata = pandas.DataFrame()
 for cat in cats:
   print " --> Extracting events from category: %s"%cat
   if inputTreeDir == '': treeName = "%s_%s_%s_%s"%(opt.productionMode,opt.inputMass,sqrts__,cat)
-  else: treeName = "%s/%s_%s_%s_%s"%(inputTreeDir,opt.productionMode,opt.inputMass,sqrts__,cat)
+  else: 
+    if "WHiggs" in opt.productionMode: # If WHiggs don't look for the mass...
+      treeName = "%s/%s_%s_%s"%(inputTreeDir,opt.productionMode,sqrts__,cat)
+    else:
+      treeName = "%s/%s_%s_%s_%s"%(inputTreeDir,opt.productionMode,opt.inputMass,sqrts__,cat)
   print "    * tree: %s"%treeName
   # Extract tree from uproot
   t = f[treeName]
