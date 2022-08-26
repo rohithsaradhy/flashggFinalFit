@@ -9,19 +9,41 @@ globalReplacementMap['example'] = od()
 # For WRONG VERTEX SCENARIO:
 #  * single proc x cat for wrong vertex since for dZ > 1cm shape independent of proc x cat
 #  * use proc x cat with highest number of WV events
-globalReplacementMap['example']['procWV'] = "GG2H"
-globalReplacementMap['example']['catWV'] = "Untagged_Tag0"
+# globalReplacementMap['example']['procWV'] = "GG2H"
+# globalReplacementMap['example']['catWV'] = "Untagged_Tag0"
+globalReplacementMap['example']['procWV'] = "QQ2HLNU"
+globalReplacementMap['example']['catWV'] = "WHLeptonicTag_0"
 # For RIGHT VERTEX SCENARIO:
 #  * default you should add is diagonal process from given category 
 #  * if few events in diagonal process then may need to change the category aswell (see catRVMap)
 #  * map must contain entry for all cats being processed (for replacement proc and cat)
 globalReplacementMap['example']['procRVMap'] = od()
-globalReplacementMap["example"]["procRVMap"]["Untagged_Tag0"] = "GG2H"
-globalReplacementMap["example"]["procRVMap"]["VBF_Tag0"] = "VBF"
+# globalReplacementMap["example"]["procRVMap"]["Untagged_Tag0"] = "GG2H"
+# globalReplacementMap["example"]["procRVMap"]["VBF_Tag0"] = "VBF"
+
+globalReplacementMap["example"]["procRVMap"]["WHLeptonicTag_0"] = "QQ2HLNU"
+globalReplacementMap["example"]["procRVMap"]["WHLeptonicTag_1"] = "QQ2HLNU"
+globalReplacementMap["example"]["procRVMap"]["WHLeptonicTag_2"] = "QQ2HLNU"
+globalReplacementMap["example"]["procRVMap"]["WHLeptonicTag_3"] = "QQ2HLNU"
+globalReplacementMap["example"]["procRVMap"]["WHLeptonicTag_4"] = "QQ2HLNU"
+globalReplacementMap["example"]["procRVMap"]["WHLeptonicTag_5"] = "QQ2HLNU"
+
+
+
+
+
+
 # Replacement category for RV fit
 globalReplacementMap["example"]["catRVMap"] = od()
-globalReplacementMap["example"]["catRVMap"]["Untagged_Tag0"] = "Untagged_Tag0"
-globalReplacementMap["example"]["catRVMap"]["VBF_Tag0"] = "VBF_Tag0"
+# globalReplacementMap["example"]["catRVMap"]["Untagged_Tag0"] = "Untagged_Tag0"
+# globalReplacementMap["example"]["catRVMap"]["VBF_Tag0"] = "VBF_Tag0"
+globalReplacementMap["example"]["catRVMap"]["WHLeptonicTag_0"] = "WHLeptonicTag_1"
+globalReplacementMap["example"]["catRVMap"]["WHLeptonicTag_1"] = "WHLeptonicTag_2"
+globalReplacementMap["example"]["catRVMap"]["WHLeptonicTag_2"] = "WHLeptonicTag_3"
+globalReplacementMap["example"]["catRVMap"]["WHLeptonicTag_3"] = "WHLeptonicTag_4"
+globalReplacementMap["example"]["catRVMap"]["WHLeptonicTag_4"] = "WHLeptonicTag_5"
+
+
 
 
 # STXS analysis

@@ -26,6 +26,9 @@ globalXSBRMap['example']['TTH'] = {'mode':'ttH'}
 globalXSBRMap['example']['BBH'] = {'mode':'bbH'}
 globalXSBRMap['example']['THQ'] = {'mode':'tHq'}
 globalXSBRMap['example']['THW'] = {'mode':'tHW'}
+globalXSBRMap['example']['whALT'] = {'mode':'constant','factor':1}
+globalXSBRMap['example']['whSM'] = {'mode':'constant','factor':1}
+
 # ...
 
 # STXS analysis: add factor for bin composition
