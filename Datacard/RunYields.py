@@ -25,7 +25,7 @@ def get_options():
   parser.add_option('--bkgModelWSDir', dest='bkgModelWSDir', default='./Models/background', help='Input background model WS directory')
   parser.add_option('--bkgModelExt', dest='bkgModelExt', default='multipdf', help='Extension used when saving background model')
   # For yields calculations:
-  parser.add_option('--doNOTAG', dest='doNOTAG', default=False, action="store_true", help="Include NOTAG dataset: needed for fully correct calculation of theory shape uncertainties (i.e. include out-of-acceptance events)")
+  parser.add_option('--doNOTAG', dest='doNOTAG', default=False, action="store_true", help="Include NoTag dataset: needed for fully correct calculation of theory shape uncertainties (i.e. include out-of-acceptance events)")
   parser.add_option('--skipZeroes', dest='skipZeroes', default=False, action="store_true", help="Skip signal processes with 0 sum of weights")
   parser.add_option('--skipCOWCorr', dest='skipCOWCorr', default=False, action="store_true", help="Skip centralObjectWeight correction for events in acceptance. Use if no centralObjectWeight in workspace")
   # For systematics:
@@ -73,10 +73,10 @@ inputWSDir0 = options['inputWSDirMap'].split(",")[0].split("=")[1]
 WSFileNames = extractWSFileNames(inputWSDir0)
 if options['cats'] == "auto": options['cats'] = extractListOfCats(WSFileNames)
 
-if( opt.doNOTAG )&( 'NOTAG' not in options['cats'] ):
-  if( containsNOTAG(WSFileNames) ): options['cats'] += ',NOTAG'
+if( opt.doNOTAG )&( 'NoTag' not in options['cats'] ):
+  if( containsNOTAG(WSFileNames) ): options['cats'] += ',NoTag'
   else:
-    print " --> [WARNING] NOTAG dataset not present in input workspace. Skipping NOTAG" 
+    print " --> [WARNING] NoTag dataset not present in input workspace. Skipping NoTag" 
 
 options['nCats'] = len(options['cats'].split(","))
 
