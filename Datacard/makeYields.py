@@ -112,7 +112,7 @@ for year in years:
     if skipProc: continue
 
     # Input model ws 
-    if opt.cat == "NOTAG": _modelWSFile, _model = '-', '-'
+    if opt.cat == "NoTag": _modelWSFile, _model = '-', '-'
     else:
       _modelWSFile = "%s/CMS-HGG_sigfit_%s_%s.root"%(opt.sigModelWSDir,opt.sigModelExt,_cat)
       _model = "%s_%s:%s_%s"%(outputWSName__,sqrts__,outputWSObjectTitle__,_id)
@@ -125,7 +125,7 @@ for year in years:
     data.loc[len(data)] = [year,'sig',_procOriginal,_proc,_proc_s0,_cat,_inputWSFile,_nominalDataName,_modelWSFile,_model,_rate]
 
 # Background and data processes
-if( not opt.skipBkg)&( opt.cat != "NOTAG" ):
+if( not opt.skipBkg)&( opt.cat != "NoTag" ):
   _proc_bkg = "bkg_mass"
   _proc_data = "data_obs"
   if opt.mergeYears:
@@ -177,8 +177,8 @@ if opt.doSystematics:
   #  * s_w: symmetric (single) weight in nominal RooDataSet (1 column in dataframe)
   experimentalFactoryType = {}
   theoryFactoryType = {}
-  # No experimental systematics for NOTAG
-  if opt.cat != "NOTAG":
+  # No experimental systematics for NoTag
+  if opt.cat != "NoTag":
     for s in experimental_systematics: 
       if s['type'] == 'factory': 
 	# Fix for HEM as only in 2018 workspaces
@@ -236,8 +236,8 @@ for ir,r in data[data['type']=='sig'].iterrows():
   # Systematics: loop over systematics and use function to extract yield variations
   if opt.doSystematics:
 
-    # For experimental systematics: skip NOTAG events
-    if "NOTAG" not in r['cat']:
+    # For experimental systematics: skip NoTag events
+    if "NoTag" not in r['cat']:
       # Skip centralObjectWeight correction as concerns events in acceptance
       experimentalSystYields = calcSystYields(r['nominalDataName'],contents,inputWS,experimentalFactoryType,skipCOWCorr=True,proc=r['proc'],year=r['year'],ignoreWarnings=opt.ignore_warnings)
       for s,f in experimentalFactoryType.iteritems():

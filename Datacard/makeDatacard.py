@@ -18,7 +18,7 @@ def get_options():
   # For pruning processes
   parser.add_option('--prune', dest='prune', default=False, action="store_true", help="Prune proc x cat which make up less than pruneThreshold (default 0.1%) of given total category")
   parser.add_option('--pruneThreshold', dest='pruneThreshold', default=0.001, type='float', help="Threshold with which to prune proc x cat as fraction of total category yield (default=0.1%)")
-  parser.add_option('--doTrueYield', dest='doTrueYield', default=False, action="store_true", help="For pruning: use true number of expected events for proc x cat i.e. Product(XS,BR,eff*acc,lumi). Use only if NOTAG dataset has been included. If false then will use nominal_yield (i.e. sumEntries)")
+  parser.add_option('--doTrueYield', dest='doTrueYield', default=False, action="store_true", help="For pruning: use true number of expected events for proc x cat i.e. Product(XS,BR,eff*acc,lumi). Use only if NoTag dataset has been included. If false then will use nominal_yield (i.e. sumEntries)")
   parser.add_option('--mass', dest='mass', default='125', help="MH mass: required for doTrueYield")
   parser.add_option('--analysis', dest='analysis', default='STXS', help="Analysis extension: required for doTrueYield (see ./tools/XSBR.py for example)")
   # For yield/systematics:
@@ -64,7 +64,7 @@ if opt.doSystematics:
   print " --> Extracting factory types for systematics"
   experimentalFactoryType = {}
   theoryFactoryType = {}
-  mask = (~data['cat'].str.contains("NOTAG"))&(data['type']=='sig')
+  mask = (~data['cat'].str.contains("NoTag"))&(data['type']=='sig')
   for s in experimental_systematics:
     if s['type'] == 'factory': 
       # Fix for HEM as only in 2018 workspaces
@@ -112,7 +112,7 @@ if opt.prune:
     XSBR = extractXSBR(data,mass=opt.mass,analysis=opt.analysis)
     data.loc[mask,'xsbr'] = data[mask].apply(lambda x: XSBR["XS_%s"%x['procOriginal']]*XSBR['BR'], axis=1)
 
-    # Extract eff*acc using total proc yield: strictly should include NOTAG
+    # Extract eff*acc using total proc yield: strictly should include NoTag
     data['ea'] = '-'
     corrExt = "_COWCorr" if not opt.skipCOWCorr else ''
     procYields = od()
@@ -127,7 +127,7 @@ if opt.prune:
     for cat in data.cat.unique(): catTrueYields[cat] = data[(data['cat']==cat)&(data['type']=='sig')].true_yield.sum()
 
     # Set prune = 1 if < threshold of total cat yield
-    mask = (data['true_yield']<opt.pruneThreshold*data.apply(lambda x: catTrueYields[x['cat']], axis=1))&(data['type']=='sig')&(~data['cat'].str.contains('NOTAG'))
+    mask = (data['true_yield']<opt.pruneThreshold*data.apply(lambda x: catTrueYields[x['cat']], axis=1))&(data['type']=='sig')&(~data['cat'].str.contains('NoTag'))
     data.loc[mask,'prune'] = 1
 
   else:
@@ -139,11 +139,11 @@ if opt.prune:
     for cat in data.cat.unique(): catYields[cat] = data[(data['cat']==cat)&(data['type']=='sig')].nominal_yield.sum()
     
     # Set prune = 1 if < threshold of total cat yield
-    mask = (data['nominal_yield']<opt.pruneThreshold*data.apply(lambda x: catYields[x['cat']], axis=1))&(data['type']=='sig')&(~data['cat'].str.contains('NOTAG'))
+    mask = (data['nominal_yield']<opt.pruneThreshold*data.apply(lambda x: catYields[x['cat']], axis=1))&(data['type']=='sig')&(~data['cat'].str.contains('NoTag'))
     data.loc[mask,'prune'] = 1
 
-  # Finally set all NOTAG events to be pruned
-  mask = data['cat'].str.contains("NOTAG")
+  # Finally set all NoTag events to be pruned
+  mask = data['cat'].str.contains("NoTag")
   data.loc[mask,'prune'] = 1
     
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
