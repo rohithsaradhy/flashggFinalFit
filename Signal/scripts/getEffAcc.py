@@ -1,5 +1,5 @@
 # Script to calculate eff x acc for different mass points
-# * Relies on the presense of NOTAG dataset. If not there, script will give NAN as output
+# * Relies on the presense of NoTag dataset. If not there, script will give NAN as output
 # * Also needs to run on all processed categories: take from file
 
 print " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ HGG GET FRACTIONS MAKER RUN II ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
@@ -35,9 +35,9 @@ def get_options():
 WSFileNames = extractWSFileNames(opt.inputWSDir)
 if not WSFileNames: leave()
 allCats = extractListOfCats(WSFileNames)
-if containsNOTAG(WSFileNames): allCats += ",NOTAG"
+if containsNOTAG(WSFileNames): allCats += ",NoTag"
 else:
-  print " --> [ERROR] getEffAcc.py requires NOTAG dataset. Must use standard weights method in signalFit.py"
+  print " --> [ERROR] getEffAcc.py requires NoTag dataset. Must use standard weights method in signalFit.py"
   leave()
 
 # Define dataframe to store yields: cow = centralObjectWeight
@@ -93,7 +93,7 @@ for _mp in opt.massPoints.split(","):
   df = data[data['massPoint']==_mp]
   effAcc = {}
   for ir,r in df.iterrows():
-    if r['cat'] == "NOTAG": continue
+    if r['cat'] == "NoTag": continue
     if opt.skipCOWCorr: proc_yield = df[df['proc']==r['proc']].nominal_yield.sum()
     else: proc_yield = df[df['proc']==r['proc']].nominal_yield_COWCorr.sum()
     ea = r['nominal_yield']/proc_yield
