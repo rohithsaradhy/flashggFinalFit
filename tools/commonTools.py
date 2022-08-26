@@ -35,8 +35,8 @@ def extractListOfCats( _listOfWSFileNames ):
   for d in allData:
     # Skip systematics shifts
     if "sigma" in d.GetName(): continue
-    # Skip NOTAG
-    elif "NOTAG" in d.GetName(): continue
+    # Skip NoTag
+    elif "NoTag" in d.GetName(): continue
     # Add to list: name of the form {proc}_{mass}_{sqrts}_{cat}
     cats.append(d.GetName().split("_%s_"%sqrts__)[-1])
   ws.Delete()
@@ -61,7 +61,7 @@ def containsNOTAG( _listOfWSFileNames ):
   ws = f0.Get(inputWSName__)
   allData = ws.allData()
   for d in allData:
-    if "NOTAG" in d.GetName(): return True
+    if "NoTag" in d.GetName(): return True
   return False
 
 # Function to return signal production (and decay extension if required) from input file name
@@ -77,8 +77,8 @@ def signalFromFileName(_fileName):
   elif "VH" in _fileName: p = "wh"
 
 
-  elif "WHiggs0MToGG" in _fileName: p = "wh_ALT"
-  elif "WHiggs0PMToGG" in _fileName: p = "wh_SM"
+  elif "WHiggs0MToGG" in _fileName: p = "whALT"
+  elif "WHiggs0PMToGG" in _fileName: p = "whSM"
 
   
   elif "WH" in _fileName: p = "wh"
