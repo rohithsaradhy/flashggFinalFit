@@ -17,7 +17,7 @@ def get_options():
   parser.add_option('--productionMode',dest='productionMode', default="ggh", help='Production mode [ggh,vbf,wh,zh,tth,thq,ggzh,bbh]')
   parser.add_option('--year',dest='year', default="2016", help='Year')
   parser.add_option('--decayExt',dest='decayExt', default='', help='Decay extension')
-  parser.add_option('--doNOTAG',dest='doNOTAG', default=False, action="store_true", help='Add NOTAG dataset to output WS')
+  parser.add_option('--doNOTAG',dest='doNOTAG', default=False, action="store_true", help='Add NoTag dataset to output WS')
   parser.add_option('--doNNLOPS',dest='doNNLOPS', default=False, action="store_true", help='Add NNLOPS weight variable: NNLOPSweight')
   parser.add_option('--doSystematics',dest='doSystematics', default=False, action="store_true", help='Add systematics datasets to output WS')
   parser.add_option('--doSTXSSplitting',dest='doSTXSSplitting', default=False, action="store_true", help='Split output WS per STXS bin')
@@ -121,18 +121,18 @@ if cats == 'auto':
   cats = []
   for tn in listOfTreeNames:
     if "sigma" in tn: continue
-    elif "NOTAG" in tn: continue
+    elif "NoTag" in tn: continue
     elif "ERROR" in tn: continue
     c = tn.split("_%s_"%sqrts__)[-1].split(";")[0]
     cats.append(c)
 
 if opt.doNOTAG:
-  # Check if NOTAG tree exists
+  # Check if NoTag tree exists
   for tn in listOfTreeNames:
     if "sigma" in tn: continue
-    if "NOTAG" in tn: cats.append("NOTAG")
-  if "NOTAG" not in cats:
-    print " --> [WARNING] NOTAG tree does not exist in input file. Not including NOTAG"
+    if "NoTag" in tn: cats.append("NoTag")
+  if "NoTag" not in cats:
+    print " --> [WARNING] NoTag tree does not exist in input file. Not including NoTag"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 1) Convert tree to pandas dataframe
@@ -162,7 +162,7 @@ for cat in cats:
     dfs[ts].columns = tsColumns
 
   # Main variables to add to nominal RooDataSets
-  dfs['main'] = t.pandas.df(mainVars) if cat!='NOTAG' else t.pandas.df(notagVars)
+  dfs['main'] = t.pandas.df(mainVars) if cat!='NoTag' else t.pandas.df(notagVars)
 
   # Concatenate current dataframes
   df = pandas.concat(dfs.values(), axis=1)
@@ -170,9 +170,9 @@ for cat in cats:
   # Add STXS splitting var if splitting necessary
   if opt.doSTXSSplitting: df[stxsVar] = t.pandas.df(stxsVar)
 
-  # For NOTAG: fix extract centralObjectWeight from theory weights if available
-  if cat == 'NOTAG':
-    df['type'] = 'NOTAG'
+  # For NoTag: fix extract centralObjectWeight from theory weights if available
+  if cat == 'NoTag':
+    df['type'] = 'NoTag'
     if opt.doNNLOPS:
       if opt.productionMode == 'ggh':
         if 'THU_ggH_VBF2jUp01sigma' in df:
@@ -187,7 +187,7 @@ for cat in cats:
     else:
       if "centralObjectWeight" in mainVars: df['centralObjectWeight'] = 1.
 
-  # For experimental phase space (not NOTAG)
+  # For experimental phase space (not NoTag)
   else:
     df['type'] = 'nominal'
     # Add NNLOPS variable
@@ -202,7 +202,7 @@ for cat in cats:
 
   # For systematics trees: only for events in experimental phase space
   if opt.doSystematics:
-    if cat == "NOTAG": continue
+    if cat == "NoTag": continue
     sdf = pandas.DataFrame()
     for s in systematics:
       print "    --> Systematic: %s"%re.sub("YEAR",opt.year,s)
@@ -276,7 +276,7 @@ for stxsId in data[stxsVar].unique():
   # Loop over cats
   for cat in cats:
 
-    # a) make RooDataSets: type = nominal/notag
+    # a) make RooDataSets: type = nominal/NoTag
     mask = (df['cat']==cat)
     # Convert dataframe to structured array, then to ROOT tree
     sa = df[mask].to_records()
@@ -299,7 +299,7 @@ for stxsId in data[stxsVar].unique():
 
     if opt.doSystematics:
       # b) make RooDataHists for systematic variations
-      if cat == "NOTAG": continue
+      if cat == "NoTag": continue
       for s in systematics:
         for direction in ['Up','Down']:
           # Create mask for systematic variation
