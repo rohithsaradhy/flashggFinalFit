@@ -146,9 +146,9 @@ for cat in cats:
   if inputTreeDir == '': treeName = "%s_%s_%s_%s"%(opt.productionMode,opt.inputMass,sqrts__,cat)
   else: 
     if "whALT" in opt.productionMode: # If WHiggs don't look for the mass...
-      treeName = "%s/%s_%s_%s"%(inputTreeDir,"WHiggs0MToGG",sqrts__,cat)
+      treeName = "%s/%s_%s_%s_%s"%(inputTreeDir,"WHiggs0MToGG",opt.inputMass,sqrts__,cat)
     elif "whSM" in opt.productionMode: # If WHiggs don't look for the mass...
-      treeName = "%s/%s_%s_%s"%(inputTreeDir,"WHiggs0PMToGG",sqrts__,cat)
+      treeName = "%s/%s_%s_%s_%s"%(inputTreeDir,"WHiggs0PMToGG",opt.inputMass,sqrts__,cat)
     else:
       treeName = "%s/%s_%s_%s_%s"%(inputTreeDir,opt.productionMode,opt.inputMass,sqrts__,cat)
 
