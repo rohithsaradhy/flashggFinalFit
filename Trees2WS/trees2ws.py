@@ -149,8 +149,6 @@ for cat in cats:
       treeName = "%s/%s_%s_%s"%(inputTreeDir,"WHiggs0MToGG",sqrts__,cat)
     elif "whSM" in opt.productionMode: # If WHiggs don't look for the mass...
       treeName = "%s/%s_%s_%s"%(inputTreeDir,"WHiggs0PMToGG",sqrts__,cat)
-    elif "wh" or "zh" in opt.productionMode:
-      treeName = "%s/%s_%s_%s_%s"%(inputTreeDir,"vh",opt.inputMass,sqrts__,cat)
     else:
       treeName = "%s/%s_%s_%s_%s"%(inputTreeDir,opt.productionMode,opt.inputMass,sqrts__,cat)
 
